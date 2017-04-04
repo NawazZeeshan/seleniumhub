@@ -25,6 +25,13 @@ ENV GRID_UNREGISTER_IF_STILL_DOWN_AFTER 30000
 
 COPY entry_point.sh /opt/bin/entry_point.sh
 
+#========================================
+# Add normal user with passwordless sudo
+#========================================
+RUN sudo useradd seluser --shell /bin/bash --create-home \
+  && sudo usermod -a -G sudo seluser \
+  && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
+  && echo 'seluser:secret' | chpasswd
 USER seluser
 
 CMD ["/opt/bin/entry_point.sh"]
