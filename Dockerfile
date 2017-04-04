@@ -32,6 +32,9 @@ RUN sudo useradd seluser --shell /bin/bash --create-home \
   && sudo usermod -a -G sudo seluser \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'seluser:secret' | chpasswd
+
+RUN chmod +x /opt/bin/entry_point.sh
+
 USER seluser
 
 CMD ["/opt/bin/entry_point.sh"]
